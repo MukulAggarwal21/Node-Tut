@@ -5,15 +5,26 @@
 // console.log(newItems)
 // console.log('hello people');
 
-const { readFile, writeFile } = require('fs')
-console.log('started a first task')
-// CHECK FILE PATH!!!!
-readFile('./content/first.txt', 'utf8', (err, result) => {
-  if (err) {
-    console.log(err)
-    return
+const http = require('http');
+
+const server = http.createServer((req,res)=> {
+if(req.url === '/'){
+  res.end('Home Page')
+}
+else if(req.url==='/about'){
+  //Blocking Code!!: it is nested for loop
+  for(let i=0 ; i<1000 ; i++){
+    for(let j=0 ;j<1000 ; j++ ){
+      console.log(`${i} ${j}`)
+    }
   }
-  console.log(result)
-  console.log('completed first task')
+  res.end('About Page')
+}
+else{
+  res.end('Error Page')
+}
+
 })
-console.log('starting next task')
+server.listen(5000,()=>{
+  console.log('Server is Listening on port 5000...')
+})
